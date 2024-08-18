@@ -1,4 +1,3 @@
-import Logo from '@/components/logo';
 import Navbar from './_components/navbar';
 import Footer from './_components/footer';
 
