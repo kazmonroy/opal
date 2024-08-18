@@ -96,6 +96,7 @@ function NavItem({
                 'bg-slate-300/20 text-slate-800 font-semibold'
             )}
           >
+            {route.icon}
             {route.label}
           </Button>
         ))}
