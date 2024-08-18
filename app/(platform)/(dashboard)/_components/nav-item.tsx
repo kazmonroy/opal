@@ -1,8 +1,8 @@
 'use client';
 
-import { Accordion, AccordionItem } from '@/components/ui';
+import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui';
 import { cn } from '@/lib/utils';
-import { AccordionTrigger } from '@radix-ui/react-accordion';
+
 import Image from 'next/image';
 
 export interface Organization {
@@ -25,13 +25,16 @@ function NavItem({
   organization,
   onExpand,
 }: NavItemProps) {
+  console.log('accordion', { isActive, isExpanded });
   return (
     <AccordionItem value={organization.id} className='border-none'>
       <AccordionTrigger
         onClick={() => onExpand(organization.id)}
         className={cn(
-          'flex items-center gap-x-2 p-1.5 text-slate-700 rounded-md hover:bg-slate-500/10 hover:no-underline transition text-start no-underline',
-          isActive && !isExpanded && 'bg-orange-500/10 text-slate-700'
+          'flex items-center gap-x-2 p-1.5 text-sm font-normal text-slate-800 rounded-md hover:bg-slate-300/20  hover:no-underline transition text-start no-underline',
+          isActive &&
+            !isExpanded &&
+            'bg-slate-300/20 text-slate-800 font-semibold'
         )}
       >
         <div className='flex items-center gap-x-2'>
@@ -43,6 +46,7 @@ function NavItem({
               className='rounded-sm object-cover'
             />
           </div>
+          {organization.name}
         </div>
       </AccordionTrigger>
     </AccordionItem>
