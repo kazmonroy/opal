@@ -25,7 +25,6 @@ function NavItem({
   organization,
   onExpand,
 }: NavItemProps) {
-  console.log('accordion', { isActive, isExpanded });
   return (
     <AccordionItem value={organization.id} className='border-none'>
       <AccordionTrigger
