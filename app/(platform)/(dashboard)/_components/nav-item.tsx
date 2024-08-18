@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   Button,
+  Skeleton,
 } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { Activity, CreditCard, Layout, Settings } from 'lucide-react';
@@ -104,5 +105,16 @@ function NavItem({
     </AccordionItem>
   );
 }
+
+NavItem.Skeleton = function SkeletonNavItem() {
+  return (
+    <div className='flex items-center gap-x-2'>
+      <div className='h-8 w-8 relative shrink-0'>
+        <Skeleton className='h-full w-full absolute' />
+      </div>
+      <Skeleton className='h-8 w-full' />
+    </div>
+  );
+};
 
 export default NavItem;
