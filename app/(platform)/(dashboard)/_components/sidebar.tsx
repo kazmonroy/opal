@@ -60,7 +60,7 @@ function Sidebar({ storagekey = 'sidebar-state' }: SidebarProps) {
           type='button'
           variant='ghost'
           className='ml-auto'
-          size='icon'
+          size='sm'
         >
           <Link href='/select-org'>
             <Plus className='h-4 w-4' />

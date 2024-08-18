@@ -13,7 +13,7 @@ function Navbar() {
         <div className='hidden md:flex'>
           <Logo />
         </div>
-        <Button size='sm' className=''>
+        <Button size='sm'>
           <Plus className='h-4 w-4 block md:hidden' />
           <span className='hidden md:block'>Create</span>
         </Button>
