@@ -1,9 +1,15 @@
 'use client';
-
-import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui';
-import { cn } from '@/lib/utils';
-
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
+
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Button,
+} from '@/components/ui';
+import { cn } from '@/lib/utils';
+import { Activity, CreditCard, Layout, Settings } from 'lucide-react';
 
 export interface Organization {
   id: string;
@@ -25,6 +31,35 @@ function NavItem({
   organization,
   onExpand,
 }: NavItemProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const routes = [
+    {
+      label: 'Boards',
+      icon: <Layout className='h-4 w-4 mr-2' />,
+      href: `/organization/${organization.id}`,
+    },
+    {
+      label: 'Activity',
+      icon: <Activity className='h-4 w-4 mr-2' />,
+      href: `/organization/${organization.id}/activity`,
+    },
+    {
+      label: 'Settings',
+      icon: <Settings className='h-4 w-4 mr-2' />,
+      href: `/organization/${organization.id}/settings`,
+    },
+    {
+      label: 'Billing',
+      icon: <CreditCard className='h-4 w-4 mr-2' />,
+      href: `/organization/${organization.id}/billing`,
+    },
+  ];
+
+  const handleClick = (href: string) => {
+    router.push(href);
+  };
+
   return (
     <AccordionItem value={organization.id} className='border-none'>
       <AccordionTrigger
@@ -48,6 +83,23 @@ function NavItem({
           {organization.name}
         </div>
       </AccordionTrigger>
+      <AccordionContent className='pt-1 text-slate-700'>
+        {routes.map((route) => (
+          <Button
+            key={route.href}
+            size='sm'
+            variant='ghost'
+            onClick={() => handleClick(route.href)}
+            className={cn(
+              'w-full font-normal justify-start pl-10 mb-1',
+              pathname === route.href &&
+                'bg-slate-300/20 text-slate-800 font-semibold'
+            )}
+          >
+            {route.label}
+          </Button>
+        ))}
+      </AccordionContent>
     </AccordionItem>
   );
 }
