@@ -1,5 +1,5 @@
 import Logo from '@/components/logo';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 import { Plus } from 'lucide-react';
 
