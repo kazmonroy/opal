@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react';
 import { useLocalStorage } from 'usehooks-ts';
 import { useOrganization, useOrganizationList } from '@clerk/nextjs';
 import { Button, Separator, Accordion, Skeleton } from '@/components/ui';
+import NavItem, { Organization } from './nav-item';
 
 interface SidebarProps {
   storagekey?: string;
@@ -76,11 +77,9 @@ function Sidebar({ storagekey = 'sidebar-state' }: SidebarProps) {
             key={organization.id}
             isActive={activeOrganization?.id === organization.id}
             isExpanded={expanded[organization.id]}
-            organization={organization}
+            organization={organization as Organization}
             onExpand={onExpand}
-          >
-            {organization.id}
-          </NavItem>
+          />
         ))}
       </Accordion>
     </aside>
