@@ -11,7 +11,7 @@ function MarketingPage() {
       </p>
 
       <div className='mt-10 flex justify-center gap-x-6'>
-        <Button>Sign up - it&apos;s free!</Button>
+        <Button variant='primary'>Sign up - it&apos;s free!</Button>
       </div>
     </div>
   );
