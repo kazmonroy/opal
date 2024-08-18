@@ -54,7 +54,7 @@ function Sidebar({ storagekey = 'sidebar-state' }: SidebarProps) {
   return (
     <aside>
       <div className='font-medium text-xs flex items-center mb-1'>
-        <span className='pl-4'>Workspaces</span>
+        <span className='pl-2'>Workspaces</span>
         <Button
           asChild
           type='button'
