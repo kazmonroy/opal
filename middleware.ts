@@ -1,15 +1,9 @@
-import {
-  clerkMiddleware,
-  ClerkMiddlewareAuth,
-  createRouteMatcher,
-} from '@clerk/nextjs/server';
-import { permanentRedirect, redirect } from 'next/navigation';
-import { NextRequest, NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
 const isPublicRoute = createRouteMatcher(['/', '/sign-in(.*)', '/sign-up(.*)']);
 
 export default clerkMiddleware((auth, request) => {
-  // Handle beforeAuth logic here
   const { userId, orgId } = auth();
 
   if (!isPublicRoute(request)) {
