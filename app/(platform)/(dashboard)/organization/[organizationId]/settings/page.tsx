@@ -9,12 +9,13 @@ function SettingsPage() {
           elements: {
             rootBox: {
               boxShadow: 'none',
-              width: '100%',
             },
-            card: {
-              border: '1px solid #E5E7EB',
+            cardBox: {
               boxShadow: 'none',
-              width: '100%',
+            },
+
+            scrollBox: {
+              borderRadius: '0',
             },
           },
         }}
