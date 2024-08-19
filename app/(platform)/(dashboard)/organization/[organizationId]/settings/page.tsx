@@ -16,6 +16,7 @@ function SettingsPage() {
 
             scrollBox: {
               borderRadius: '0',
+              width: '100%',
             },
           },
         }}
