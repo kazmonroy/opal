@@ -5,6 +5,7 @@ import { Button } from '@/components/ui';
 
 import { useFormState } from 'react-dom';
 import FormInput from './form-input';
+import FormButton from './form-button';
 
 function Form() {
   const [formState, action] = useFormState(createBoard, { errors: {} });
@@ -12,7 +13,7 @@ function Form() {
     <>
       <form action={action} className='flex gap-2'>
         <FormInput errors={formState?.errors} />
-        <Button type='submit'>Submit</Button>
+        <FormButton>Submit</FormButton>
       </form>
       <div className='text-red-500'>
         {formState?.errors?.title && <p>{formState.errors.title.join(',')}</p>}

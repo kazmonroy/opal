@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from '@/components/ui';
 import { useFormStatus } from 'react-dom';
 
 interface FormInputProps {
@@ -14,7 +15,7 @@ function FormInput({ errors }: FormInputProps) {
   const { pending } = useFormStatus();
   return (
     <div>
-      <input
+      <Input
         disabled={pending}
         type='text'
         id='title'
