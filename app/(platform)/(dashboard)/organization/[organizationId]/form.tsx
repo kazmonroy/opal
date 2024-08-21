@@ -25,9 +25,6 @@ function Form() {
         <FormInput errors={fieldErrors} />
         <FormButton>Submit</FormButton>
       </form>
-      <div className='text-red-500'>
-        {fieldErrors?.title && <p>{fieldErrors.title}</p>}
-      </div>
     </>
   );
 }
