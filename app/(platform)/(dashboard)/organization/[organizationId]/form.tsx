@@ -1,22 +1,32 @@
 'use client';
 
 import { createBoard } from '@/actions';
-import { Button } from '@/components/ui';
-
-import { useFormState } from 'react-dom';
 import FormInput from './form-input';
 import FormButton from './form-button';
+import { useAction } from '@/hooks/use-action';
 
 function Form() {
-  const [formState, action] = useFormState(createBoard, { errors: {} });
+  const { execute, fieldErrors } = useAction(createBoard, {
+    onSuccess: (data) => {
+      console.log(data, 'WORKSSS');
+    },
+    onError: (error) => {
+      console.log(error, 'ERROR');
+    },
+  });
+
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get('title') as string;
+    execute({ title });
+  };
   return (
     <>
-      <form action={action} className='flex gap-2'>
-        <FormInput errors={formState?.errors} />
+      <form action={onSubmit} className='flex gap-2'>
+        <FormInput errors={fieldErrors} />
         <FormButton>Submit</FormButton>
       </form>
       <div className='text-red-500'>
-        {formState?.errors?.title && <p>{formState.errors.title.join(',')}</p>}
+        {fieldErrors?.title && <p>{fieldErrors.title}</p>}
       </div>
     </>
   );
