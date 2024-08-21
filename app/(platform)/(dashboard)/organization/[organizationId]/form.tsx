@@ -1,26 +1,22 @@
 'use client';
-import { Button } from '@/components/ui';
-import { createBoard } from '@/actions';
-import { useAction } from '@/hooks/use-action';
-import Boards from './boards';
-function Form() {
-  const { execute, fieldErrors } = useAction(createBoard, {
-    onSucces: (data) => console.log('SUCCESS', data),
-    onError: (err) => console.error(err),
-  });
-  const onSubmit = (formData: FormData) => {
-    const title = formData.get('title') as string;
-    execute({ title });
-  };
 
+import { createBoard } from '@/actions';
+import { Button } from '@/components/ui';
+
+import { useFormState } from 'react-dom';
+import FormInput from './form-input';
+
+function Form() {
+  const [formState, action] = useFormState(createBoard, { errors: {} });
   return (
     <>
-      <form action={onSubmit}>
-        <input type='text' name='title' id='Title' placeholder='Title' />
-        {fieldErrors?.title && <p>{fieldErrors.title}</p>}
-        <Button type='submit'>Create new board</Button>
+      <form action={action} className='flex gap-2'>
+        <FormInput errors={formState?.errors} />
+        <Button type='submit'>Submit</Button>
       </form>
-      <Boards />
+      <div className='text-red-500'>
+        {formState?.errors?.title && <p>{formState.errors.title.join(',')}</p>}
+      </div>
     </>
   );
 }
