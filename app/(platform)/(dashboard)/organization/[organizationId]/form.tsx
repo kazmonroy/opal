@@ -23,7 +23,7 @@ function Form() {
   return (
     <>
       <form action={onSubmit} className='flex gap-2'>
-        <FormInput id='title' errors={fieldErrors} />
+        <FormInput label='Board Title' id='title' errors={fieldErrors} />
         <FormButton>Submit</FormButton>
       </form>
     </>
