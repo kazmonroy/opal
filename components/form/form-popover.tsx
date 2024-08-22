@@ -1,10 +1,17 @@
 'use client';
 
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverClose,
+  Button,
+} from '@/components/ui';
 import { useAction } from '@/hooks/use-action';
 import { createBoard } from '@/actions';
 import { FormInput } from './form-input';
 import FormSubmit from './form-submit';
+import { X } from 'lucide-react';
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -25,6 +32,14 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
         <div className='text-sm font-medium text-center to-slate-600 pb-4'>
           Create board
         </div>
+        <PopoverClose asChild>
+          <Button
+            className='h-auto w-auto p-2 absolute top-2 right-2 text-slate-600'
+            variant='ghost'
+          >
+            <X className='h-4 w-4' />
+          </Button>
+        </PopoverClose>
       </PopoverContent>
     </Popover>
   );
