@@ -20,6 +20,19 @@ interface FormPopoverProps {
   sideoffset?: number;
 }
 function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
+  const { execute, fieldErrors } = useAction(createBoard, {
+    onSuccess: (data) => {
+      console.log({ data });
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get('title') as string;
+    execute({ title });
+  };
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
@@ -40,6 +53,12 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
             <X className='h-4 w-4' />
           </Button>
         </PopoverClose>
+        <form className='space-y-4' action={onSubmit}>
+          <div className='space-y-4'>
+            <FormInput id='title' label='Board title' type='text' />
+          </div>
+          <FormSubmit className='w-full'>Creat</FormSubmit>
+        </form>
       </PopoverContent>
     </Popover>
   );
