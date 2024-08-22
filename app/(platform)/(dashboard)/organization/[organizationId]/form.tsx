@@ -2,9 +2,9 @@
 
 import { createBoard } from '@/actions';
 
-import FormButton from './form-button';
 import { useAction } from '@/hooks/use-action';
 import { FormInput } from '@/components/form/form-input';
+import FormSubmit from '@/components/form/form-submit';
 
 function Form() {
   const { execute, fieldErrors } = useAction(createBoard, {
@@ -24,7 +24,7 @@ function Form() {
     <>
       <form action={onSubmit} className='flex gap-2'>
         <FormInput label='Board Title' id='title' errors={fieldErrors} />
-        <FormButton>Submit</FormButton>
+        <FormSubmit>Submit</FormSubmit>
       </form>
     </>
   );
