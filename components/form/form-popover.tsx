@@ -12,6 +12,7 @@ import { createBoard } from '@/actions';
 import { FormInput } from './form-input';
 import FormSubmit from './form-submit';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -23,9 +24,11 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log({ data });
+      toast.success('Board created!');
     },
     onError: (error) => {
       console.error(error);
+      toast.error(error);
     },
   });
 
