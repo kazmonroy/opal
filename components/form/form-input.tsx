@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Input, Label } from '@/components/ui';
 import { cn } from '@/lib/utils';
+import { FormErrors } from './form-errors';
 
 interface FormInputProps {
   id: string;
@@ -61,6 +62,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             aria-describedby={`${id}-error`}
           />
         </div>
+        <FormErrors id={id} errors={errors} />
       </div>
     );
   }
