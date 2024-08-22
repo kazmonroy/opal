@@ -55,7 +55,12 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
         </PopoverClose>
         <form className='space-y-4' action={onSubmit}>
           <div className='space-y-4'>
-            <FormInput id='title' label='Board title' type='text' />
+            <FormInput
+              id='title'
+              label='Board title'
+              type='text'
+              errors={fieldErrors}
+            />
           </div>
           <FormSubmit className='w-full'>Creat</FormSubmit>
         </form>
