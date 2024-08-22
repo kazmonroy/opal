@@ -28,3 +28,9 @@ export {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
+
+export {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '@/components/ui/popover';
