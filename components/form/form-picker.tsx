@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
+import { defaultImages } from '@/constants/images';
 
 interface FormPickerProps {
   id: string;
@@ -33,7 +34,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
         }
       } catch (error) {
         console.error(error);
-        setImages([]);
+        setImages([defaultImages]);
       } finally {
         setIsLoading(false);
       }
