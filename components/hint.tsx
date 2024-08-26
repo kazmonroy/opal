@@ -21,7 +21,7 @@ function Hint({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent
           side={side}
           sideOffset={sideOffset}
