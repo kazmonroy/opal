@@ -1,10 +1,11 @@
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { HelpCircle, User2 } from 'lucide-react';
+import Link from 'next/link';
 import FormPopover from '@/components/form/form-popover';
 import Hint from '@/components/hint';
+import { Skeleton } from '@/components/ui';
 import { db } from '@/db';
-import Link from 'next/link';
 
 async function BoardList() {
   const { orgId } = auth();
@@ -63,5 +64,17 @@ async function BoardList() {
     </div>
   );
 }
+
+BoardList.Skeleton = function SkeletonBoardList() {
+  const SkeletonElements = Array.from({ length: 8 }, (_, index) => (
+    <Skeleton key={index} className='aspect-video p-2 h-full w-full' />
+  ));
+
+  return (
+    <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
+      {SkeletonElements}
+    </div>
+  );
+};
 
 export default BoardList;
