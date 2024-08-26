@@ -1,8 +1,27 @@
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { HelpCircle, User2 } from 'lucide-react';
 import FormPopover from '@/components/form/form-popover';
 import Hint from '@/components/hint';
-import { HelpCircle, User2 } from 'lucide-react';
+import { db } from '@/db';
+import Link from 'next/link';
 
-function BoardList() {
+async function BoardList() {
+  const { orgId } = auth();
+
+  if (!orgId) {
+    return redirect('select-org');
+  }
+
+  const boards = await db.board.findMany({
+    where: {
+      orgId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return (
     <div className='space-y-4'>
       <div className='flex items-center font-semibold font-lg text-slate-700'>
@@ -27,6 +46,19 @@ function BoardList() {
             </Hint>
           </div>
         </FormPopover>
+        {boards.map((board) => (
+          <Link
+            key={board.id}
+            href={`/board/${board.id}`}
+            style={{
+              backgroundImage: `url(${board.imageThumbUrl})`,
+            }}
+            className='group relative aspect-video bg-no-repeat bg-center bg-cover rounded-sm bg-slate-500 h-full w-full p-2 overflow-hidden'
+          >
+            <div className='absolute inset-0 bg-black/30 group-hover:bg-black/40 transition' />
+            <p className='relative  text-slate-50 '>{board.title}</p>
+          </Link>
+        ))}
       </div>
     </div>
   );
