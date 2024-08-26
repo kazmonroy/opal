@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { defaultImages } from '@/constants/images';
 import Link from 'next/link';
+import { FormErrors } from './form-errors';
 
 interface FormPickerProps {
   id: string;
@@ -88,6 +89,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
           </div>
         ))}
       </div>
+      <FormErrors id={id} errors={errors} />
     </div>
   );
 }
