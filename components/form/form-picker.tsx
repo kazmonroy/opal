@@ -68,6 +68,15 @@ function FormPicker({ id, errors }: FormPickerProps) {
               setSelectedImgId(img.id);
             }}
           >
+            <input
+              type='radio'
+              id={id}
+              name={id}
+              className='hidden'
+              checked={selectedImgId === img.id}
+              disabled={pending}
+              value={`${img.id}|${img.urls.thumb}|${img.urls.full}|${img.links.html}|${img.user.name}`}
+            />
             <Image
               src={img.urls.thumb}
               alt={img.description}
