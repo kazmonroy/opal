@@ -13,6 +13,7 @@ import { FormInput } from './form-input';
 import FormSubmit from './form-submit';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
+import FormPicker from './form-picker';
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
         </PopoverClose>
         <form className='space-y-4' action={onSubmit}>
           <div className='space-y-4'>
+            <FormPicker id='image' errors={fieldErrors} />
             <FormInput
               id='title'
               label='Board title'
