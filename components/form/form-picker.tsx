@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { defaultImages } from '@/constants/images';
+import Link from 'next/link';
 
 interface FormPickerProps {
   id: string;
@@ -57,7 +58,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
           <div
             key={img.id}
             className={cn(
-              'cursor-pointer relative aspect-video group hover:opacity-75 transition bg-muted rounded-sm',
+              'cursor-pointer relative aspect-video group hover:opacity-85 transition bg-muted rounded-sm overflow-hidden',
               pending && 'opacity-50 hover:opacity-50 cursor-auto'
             )}
             onClick={() => {
@@ -71,6 +72,13 @@ function FormPicker({ id, errors }: FormPickerProps) {
               fill
               className='object-cover rounded-sm'
             />
+            <Link
+              href={img.links.html}
+              target='_blank'
+              className='opacity-0 group-hover:opacity-100 absolute bottom-0 w-full ml-1 text-[10px] truncate text-white hover:underline  bg-black/50'
+            >
+              {img.user.name}
+            </Link>
           </div>
         ))}
       </div>
