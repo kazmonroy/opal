@@ -2,7 +2,7 @@
 
 import { unsplash } from '@/lib/unsplash';
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
@@ -51,6 +51,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
       </div>
     );
   }
+
   return (
     <div className='relative'>
       <div className='grid grid-cols-3 gap-2 mb-2'>
@@ -75,10 +76,15 @@ function FormPicker({ id, errors }: FormPickerProps) {
             <Link
               href={img.links.html}
               target='_blank'
-              className='opacity-0 group-hover:opacity-100 absolute bottom-0 w-full ml-1 text-[10px] truncate text-white hover:underline  bg-black/50'
+              className='opacity-0 group-hover:opacity-100 absolute bottom-0 w-full pl-1 text-[10px] truncate text-white hover:underline bg-black/50'
             >
               {img.user.name}
             </Link>
+            {selectedImgId === img.id && (
+              <div className='absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center'>
+                <Check className='h-4 w-4 text-white' />
+              </div>
+            )}
           </div>
         ))}
       </div>
