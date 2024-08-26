@@ -47,6 +47,7 @@ async function BoardList() {
             </Hint>
           </div>
         </FormPopover>
+
         {boards.map((board) => (
           <Link
             key={board.id}
@@ -66,13 +67,16 @@ async function BoardList() {
 }
 
 BoardList.Skeleton = function SkeletonBoardList() {
-  const SkeletonElements = Array.from({ length: 8 }, (_, index) => (
-    <Skeleton key={index} className='aspect-video p-2 h-full w-full' />
-  ));
-
   return (
     <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
-      {SkeletonElements}
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
+      <Skeleton className='aspect-video p-2 h-full w-full' />
     </div>
   );
 };
