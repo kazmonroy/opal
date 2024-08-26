@@ -78,6 +78,7 @@ function NavItem({
               src={organization.imageUrl}
               alt={organization.name}
               fill
+              sizes='100%'
               className='rounded-sm object-cover'
             />
           </div>

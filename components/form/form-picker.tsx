@@ -81,6 +81,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
               src={img.urls.thumb}
               alt={img.description}
               fill
+              sizes='100%'
               className='object-cover rounded-sm'
             />
             <Link
