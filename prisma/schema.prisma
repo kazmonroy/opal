@@ -18,7 +18,7 @@ model Board {
   orgId         String
   title         String
   imageId       String
-  imageThumbUr  String
+  imageThumbUrl String
   imageFullUrl  String
   imageUserName String
   imageLinkHTML String
