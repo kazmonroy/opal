@@ -21,7 +21,7 @@ interface ListOptionsProps {
 }
 
 function ListOptions({ onAddCard, data }: ListOptionsProps) {
-  const { execute } = useAction(deleteList, {
+  const { execute: executeDelete } = useAction(deleteList, {
     onSuccess: (data) => {
       toast.success(`List ${data.title} deleted!`);
     },
@@ -33,7 +33,7 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
   const handleDeleteList = (formData: FormData) => {
     const id = formData.get('id') as string;
     const boardId = formData.get('boardId') as string;
-    execute({ id, boardId });
+    executeDelete({ id, boardId });
   };
   return (
     <div>
