@@ -36,6 +36,20 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
             </PopoverClose>
           </div>
           <Button
+            onClick={onAddCard}
+            variant='ghost'
+            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+          >
+            Add card
+          </Button>
+          <Button
+            onClick={onAddCard}
+            variant='ghost'
+            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+          >
+            Copy list
+          </Button>
+          <Button
             variant='ghost'
             className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
           >
