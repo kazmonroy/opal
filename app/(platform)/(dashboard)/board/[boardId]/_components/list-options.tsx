@@ -23,7 +23,7 @@ interface ListOptionsProps {
 function ListOptions({ onAddCard, data }: ListOptionsProps) {
   const { execute: executeDelete } = useAction(deleteList, {
     onSuccess: (data) => {
-      toast.success(`List ${data.title} deleted`);
+      toast.success(`List "${data.title}" deleted`);
     },
     onError: (error) => {
       toast.error(error);
@@ -32,7 +32,7 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
 
   const { execute: executeCopy } = useAction(copyList, {
     onSuccess: (data) => {
-      toast.success(`List ${data.title} created`);
+      toast.success(`List "${data.title}" created`);
     },
     onError: (error) => {
       toast.error(error);

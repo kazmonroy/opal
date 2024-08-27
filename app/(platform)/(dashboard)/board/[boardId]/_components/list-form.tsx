@@ -21,7 +21,7 @@ function ListForm() {
   const [isEditing, setIsEditing] = useState(false);
   const { execute, fieldErrors } = useAction(createList, {
     onSuccess: (data) => {
-      toast.success(`List ${data.title} created!`);
+      toast.success(`List "${data.title}" created`);
       disableEditing();
       router.refresh();
     },
