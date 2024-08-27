@@ -11,7 +11,7 @@ interface BoardIdLayoutProps {
   };
 }
 
-const getBoard = (boardId: string, orgId: string) => {
+export const getBoard = (boardId: string, orgId: string) => {
   return db.board.findUnique({
     where: { id: boardId, orgId },
   });
@@ -60,7 +60,7 @@ async function BoardIdLayout({ children, params }: BoardIdLayoutProps) {
       className='relative h-full bg-no-repeat bg-cover bg-center'
       style={{ backgroundImage: `url(${imageFullUrl})` }}
     >
-      <BoardNavbar id={boardId} />
+      <BoardNavbar data={board} />
       <main className='relative pt-28 h-full'>{children}</main>
     </div>
   );
