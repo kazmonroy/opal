@@ -26,22 +26,11 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
             <MoreHorizontal className='w-4 h-4' />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='px-0 pt-3 pb-3' side='bottom' align='start'>
-          <div className='text-sm font-medium text-center  text-slate-600 pb-4'>
-            List actions
-            <PopoverClose asChild>
-              <Button
-                variant='ghost'
-                className='absolute w-auto h-auto top-2 right-2'
-              >
-                <X className='w-4 h-4' />
-              </Button>
-            </PopoverClose>
-          </div>
+        <PopoverContent className='px-0 py-2' side='bottom' align='start'>
           <Button
             onClick={onAddCard}
             variant='ghost'
-            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-light justify-start'
           >
             Add card
           </Button>
@@ -56,9 +45,9 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
             />
             <FormSubmit
               variant='ghost'
-              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-light justify-start'
             >
-              Copy list
+              Copy
             </FormSubmit>
           </form>
 
@@ -74,9 +63,9 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
             />
             <FormSubmit
               variant='ghost'
-              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-light justify-start'
             >
-              Delete list
+              Delete
             </FormSubmit>
           </form>
         </PopoverContent>
