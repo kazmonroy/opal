@@ -1,8 +1,9 @@
 'use client';
 
-import { ElementRef, useRef, useState } from 'react';
-import { Board } from '@prisma/client';
 import { toast } from 'sonner';
+import { Board } from '@prisma/client';
+import { useEventListener } from 'usehooks-ts';
+import { ElementRef, useRef, useState } from 'react';
 import { Button } from '@/components/ui';
 import { FormInput } from '@/components/form/form-input';
 import { useAction } from '@/hooks/use-action';
@@ -18,7 +19,7 @@ function BoardTitleForm({ data }: BoardTitleFormProps) {
   const inputRef = useRef<ElementRef<'input'>>(null);
   const { execute, fieldErrors } = useAction(updateBoard, {
     onSuccess: (data) => {
-      toast.success(`Board ${data.title} updated!`);
+      toast.success(`Board ${data.title} updated`);
       setTitle(data.title);
       disableEditing();
     },
@@ -41,23 +42,25 @@ function BoardTitleForm({ data }: BoardTitleFormProps) {
 
   const onSubmit = (formData: FormData) => {
     const updatedTitle = formData.get('title') as string;
-
-    if (updatedTitle !== data.title) {
-      execute({ id: data.id, title: updatedTitle });
-    } else {
-      disableEditing();
-      return;
+    if (title === updatedTitle) {
+      return disableEditing();
     }
+
+    execute({ id: data.id, title: updatedTitle });
   };
 
-  const onBlur = (title: string) => {
-    if (title !== data.title) {
+  const onBlur = () => {
+    formRef.current?.requestSubmit();
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
       formRef.current?.requestSubmit();
-    } else {
       disableEditing();
-      return;
     }
   };
+
+  useEventListener('keydown', onKeyDown);
 
   if (isEditing) {
     return (
@@ -70,7 +73,7 @@ function BoardTitleForm({ data }: BoardTitleFormProps) {
           ref={inputRef}
           id='title'
           defaultValue={title}
-          onBlur={() => onBlur(title)}
+          onBlur={onBlur}
           className='font-bold text-lg px-1 py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none'
         />
       </form>
