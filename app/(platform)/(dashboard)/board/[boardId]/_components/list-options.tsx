@@ -13,7 +13,7 @@ import {
 } from '@/components/ui';
 import FormSubmit from '@/components/form/form-submit';
 import { useAction } from '@/hooks/use-action';
-import { deleteList } from '@/actions';
+import { copyList, deleteList } from '@/actions';
 
 interface ListOptionsProps {
   onAddCard: () => void;
@@ -23,7 +23,16 @@ interface ListOptionsProps {
 function ListOptions({ onAddCard, data }: ListOptionsProps) {
   const { execute: executeDelete } = useAction(deleteList, {
     onSuccess: (data) => {
-      toast.success(`List ${data.title} deleted!`);
+      toast.success(`List ${data.title} deleted`);
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const { execute: executeCopy } = useAction(copyList, {
+    onSuccess: (data) => {
+      toast.success(`List ${data.title} created`);
     },
     onError: (error) => {
       toast.error(error);
@@ -34,6 +43,12 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
     const id = formData.get('id') as string;
     const boardId = formData.get('boardId') as string;
     executeDelete({ id, boardId });
+  };
+
+  const handleCopyList = (formData: FormData) => {
+    const id = formData.get('id') as string;
+    const boardId = formData.get('boardId') as string;
+    executeCopy({ id, boardId });
   };
   return (
     <div>
@@ -52,7 +67,7 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
             Add card
           </Button>
 
-          <form action=''>
+          <form action={handleCopyList}>
             <input hidden name='id' id='id' defaultValue={data.id} />
             <input
               hidden
