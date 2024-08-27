@@ -2,7 +2,7 @@
 
 import { toast } from 'sonner';
 import { Plus } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEventListener, useOnClickOutside } from 'usehooks-ts';
 import { ElementRef, useRef, useState } from 'react';
 
@@ -15,6 +15,7 @@ import { createList } from '@/actions/create-list';
 
 function ListForm() {
   const params = useParams();
+  const router = useRouter();
   const formrRef = useRef<ElementRef<'form'>>(null);
   const inputRef = useRef<ElementRef<'input'>>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +23,7 @@ function ListForm() {
     onSuccess: (data) => {
       toast.success(`List ${data.title} created!`);
       disableEditing();
+      router.refresh();
     },
     onError: (error) => {
       toast.error(error);
@@ -67,6 +69,7 @@ function ListForm() {
             id='title'
             defaultValue=''
             placeholder='Enter list title'
+            errors={fieldErrors}
             className='text-sm bg-slate-50 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition'
           />
           <input type='submit' value={params.boardId} name='boardId' hidden />
