@@ -1,4 +1,10 @@
-function BoardOptions({ id }: { id: string }) {
+'use client';
+
+interface BoardOptionsProps {
+  id: string;
+}
+function BoardOptions({ id }: BoardOptionsProps) {
+  
   return <p>Board Options! {id}</p>;
 }
 
