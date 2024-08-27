@@ -8,7 +8,10 @@ import {
   PopoverContent,
   PopoverClose,
   Button,
+  Separator,
 } from '@/components/ui';
+import FormSubmit from '@/components/form/form-submit';
+
 interface ListOptionsProps {
   onAddCard: () => void;
   data: List;
@@ -42,19 +45,40 @@ function ListOptions({ onAddCard, data }: ListOptionsProps) {
           >
             Add card
           </Button>
-          <Button
-            onClick={onAddCard}
-            variant='ghost'
-            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
-          >
-            Copy list
-          </Button>
-          <Button
-            variant='ghost'
-            className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
-          >
-            Delete list
-          </Button>
+
+          <form action=''>
+            <input hidden name='id' id='id' defaultValue={data.id} />
+            <input
+              hidden
+              name='boardId'
+              id='boardId'
+              defaultValue={data.boardId}
+            />
+            <FormSubmit
+              variant='ghost'
+              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+            >
+              Copy list
+            </FormSubmit>
+          </form>
+
+          <Separator className='my-1' />
+
+          <form action=''>
+            <input hidden name='id' id='id' defaultValue={data.id} />
+            <input
+              hidden
+              name='boardId'
+              id='boardId'
+              defaultValue={data.boardId}
+            />
+            <FormSubmit
+              variant='ghost'
+              className='rounded-none w-full h-auto p-2 px-5 text-sm text-left font-normal justify-start'
+            >
+              Delete list
+            </FormSubmit>
+          </form>
         </PopoverContent>
       </Popover>
     </div>
