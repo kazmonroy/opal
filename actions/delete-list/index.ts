@@ -3,7 +3,6 @@
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { List } from '@prisma/client';
-import { redirect } from 'next/navigation';
 import { InputType, ReturnType } from './types';
 import { deleteListSchema } from './schema';
 import { createSafeAction } from '@/lib/create-safe-action';
