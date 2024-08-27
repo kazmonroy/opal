@@ -74,7 +74,7 @@ function BoardTitleForm({ data }: BoardTitleFormProps) {
           id='title'
           defaultValue={title}
           onBlur={onBlur}
-          className='font-bold text-lg px-1 py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none'
+          className='font-bold text-lg px-2 py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none'
         />
       </form>
     );
