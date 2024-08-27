@@ -1,12 +1,18 @@
 'use client';
 
-import { List } from '@prisma/client';
+import { ListWithCards } from '@/types';
+import ListForm from './list-form';
 
 interface ListContainerProps {
   boardId: string;
-  data: List[];
+  data: ListWithCards[];
 }
 
 export default function ListContainer({ boardId, data }: ListContainerProps) {
-  return <div className='w-full h-full'>List container</div>;
+  return (
+    <ol className='w-full h-full'>
+      <ListForm />
+      <div className='flex-shrink-0 w-1' />
+    </ol>
+  );
 }
