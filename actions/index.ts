@@ -1,2 +1,2 @@
 export { createBoard } from './create-board/index';
-export { deleteBoard } from './delete-board';
+export { updateBoard } from './update-board/index';

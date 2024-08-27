@@ -30,6 +30,11 @@ function BoardTitleForm({ data: { title } }: BoardTitleFormProps) {
     // setIsEditing(false);
   };
 
+  const onBlur = () => {
+    formRef.current?.requestSubmit();
+    console.log(title);
+  };
+
   if (isEditing) {
     return (
       <form
@@ -41,7 +46,7 @@ function BoardTitleForm({ data: { title } }: BoardTitleFormProps) {
           ref={inputRef}
           id='title'
           defaultValue={title}
-          onBlur={() => {}}
+          onBlur={onBlur}
           className='font-bold text-lg px-1 py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none'
         />
       </form>
