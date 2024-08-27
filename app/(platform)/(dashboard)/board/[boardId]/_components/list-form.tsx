@@ -84,7 +84,12 @@ function ListForm() {
 
   return (
     <ListWrapper>
-      <Button onClick={enableEditing} variant='outline' className='w-full'>
+      <Button
+        onClick={enableEditing}
+        size='lg'
+        variant='outline'
+        className='w-full'
+      >
         Create List
         <Plus className='w-4 h-4 ml-2' />
       </Button>
