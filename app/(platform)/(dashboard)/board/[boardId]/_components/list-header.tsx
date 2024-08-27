@@ -1,9 +1,12 @@
 'use client';
 
+import { toast } from 'sonner';
+import { List } from '@prisma/client';
 import { useEventListener } from 'usehooks-ts';
 import { ElementRef, useRef, useState } from 'react';
-import { List } from '@prisma/client';
 import { FormInput } from '@/components/form/form-input';
+import { useAction } from '@/hooks/use-action';
+import { updateList } from '@/actions';
 
 interface ListHeaderProps {
   data: List;
@@ -14,6 +17,16 @@ function ListHeader({ data }: ListHeaderProps) {
   const [isEditing, setIsEditing] = useState(false);
   const formRef = useRef<ElementRef<'form'>>(null);
   const inputRef = useRef<ElementRef<'input'>>(null);
+  const { execute, fieldErrors } = useAction(updateList, {
+    onSuccess: (data) => {
+      toast.success(`Renamed to ${data.title}`);
+      setTitle(data.title);
+      disableEditing();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
 
   const enableEditing = () => {
     setIsEditing(true);
@@ -27,6 +40,10 @@ function ListHeader({ data }: ListHeaderProps) {
     setIsEditing(false);
   };
 
+  const onBlur = () => {
+    formRef.current?.requestSubmit();
+  };
+
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       formRef.current?.requestSubmit();
@@ -34,12 +51,28 @@ function ListHeader({ data }: ListHeaderProps) {
     }
   };
 
+  const onSubmit = (formData: FormData) => {
+    const title = formData.get('title') as string;
+    const id = formData.get('id') as string;
+    const boardId = formData.get('boardId') as string;
+
+    if (title === data.title) {
+      return disableEditing();
+    }
+
+    execute({ title, id, boardId });
+  };
+
   useEventListener('keydown', onKeyDown);
 
   return (
     <div className='pt-2 px-2 text-sm font-semibold flex justify-between items-start gap-x-2 '>
       {isEditing ? (
-        <form action='' className='flex-1 rounded-sm text-sm h-7 font-medium  '>
+        <form
+          ref={formRef}
+          action={onSubmit}
+          className='flex-1 rounded-sm text-sm h-7 font-medium  '
+        >
           <input type='text' hidden id='id' name='id' value={data.id} />
           <input
             type='text'
@@ -52,10 +85,12 @@ function ListHeader({ data }: ListHeaderProps) {
             ref={inputRef}
             id='title'
             placeholder='Enter list title'
-            onBlur={disableEditing}
+            onBlur={onBlur}
             defaultValue={title}
+            errors={fieldErrors}
             className='font-medium border-transparent hover:border-input focus:border-input bg-transparent focus:bg-slate-50  transition truncate'
           />
+          <button type='submit' hidden />
         </form>
       ) : (
         <div
