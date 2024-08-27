@@ -29,7 +29,7 @@ function FormPopover({ children, side, align, sideoffset }: FormPopoverProps) {
   const router = useRouter();
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
-      toast.success('Board created!');
+      toast.success('Board created');
       closeRef.current?.click();
       router.push(`/board/${data.id}`);
     },

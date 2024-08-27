@@ -21,7 +21,7 @@ function ListForm() {
   const [isEditing, setIsEditing] = useState(false);
   const { execute, fieldErrors } = useAction(createList, {
     onSuccess: (data) => {
-      toast.success(`List ${data.title} created!`);
+      toast.success(`List "${data.title}" created`);
       disableEditing();
       router.refresh();
     },
@@ -88,10 +88,10 @@ function ListForm() {
         onClick={enableEditing}
         size='lg'
         variant='outline'
-        className='justify-start w-full px-4'
+        className='justify-start w-full px-4 h-[3rem]'
       >
         <Plus className='w-4 h-4 mr-2' />
-        Create List
+        Create list
       </Button>
     </ListWrapper>
   );
