@@ -2,7 +2,7 @@ import { auth } from '@clerk/nextjs/server';
 import { notFound, redirect } from 'next/navigation';
 import { db } from '@/db';
 import { startCase } from 'lodash';
-import BoardNavbar from '../../_components/board-navbar';
+import BoardNavbar from './_components/board-navbar';
 
 interface BoardIdLayoutProps {
   children?: React.ReactNode;
