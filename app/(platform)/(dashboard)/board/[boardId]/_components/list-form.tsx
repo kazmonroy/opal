@@ -88,10 +88,10 @@ function ListForm() {
         onClick={enableEditing}
         size='lg'
         variant='outline'
-        className='w-full'
+        className='justify-start w-full px-4'
       >
+        <Plus className='w-4 h-4 mr-2' />
         Create List
-        <Plus className='w-4 h-4 ml-2' />
       </Button>
     </ListWrapper>
   );

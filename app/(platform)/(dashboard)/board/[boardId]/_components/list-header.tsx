@@ -54,7 +54,7 @@ function ListHeader({ data }: ListHeaderProps) {
             placeholder='Enter list title'
             onBlur={disableEditing}
             defaultValue={title}
-            className='font-medium border-transparent hover:border-input focus:border-input transition truncate'
+            className='font-medium border-transparent hover:border-input focus:border-input bg-transparent focus:bg-slate-50  transition truncate'
           />
         </form>
       ) : (
