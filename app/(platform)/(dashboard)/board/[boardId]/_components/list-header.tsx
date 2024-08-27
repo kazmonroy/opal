@@ -73,13 +73,13 @@ function ListHeader({ data }: ListHeaderProps) {
           action={onSubmit}
           className='flex-1 rounded-sm text-sm h-7 font-medium  '
         >
-          <input type='text' hidden id='id' name='id' value={data.id} />
+          <input type='text' hidden id='id' name='id' defaultValue={data.id} />
           <input
             type='text'
             hidden
             id='boardId'
             name='boardId'
-            value={data.boardId}
+            defaultValue={data.boardId}
           />
           <FormInput
             ref={inputRef}
