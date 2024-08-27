@@ -1,6 +1,7 @@
 'use client';
 
 import { ListWithCards } from '@/types';
+import ListHeader from './list-header';
 
 interface ListItemProps {
   data: ListWithCards;
@@ -9,8 +10,8 @@ interface ListItemProps {
 function ListItem({ data, index }: ListItemProps) {
   return (
     <li className='shrink-0 h-full w-[17rem] select-none'>
-      <div className='w-full rounded-md bg-slate-500 shadow-md pb-2'>
-        {data.title}
+      <div className='w-full rounded-md bg-slate-50 shadow-md pb-2'>
+        <ListHeader />
       </div>
     </li>
   );
