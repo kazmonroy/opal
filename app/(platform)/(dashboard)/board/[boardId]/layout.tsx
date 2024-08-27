@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server';
 import { notFound, redirect } from 'next/navigation';
 import { db } from '@/db';
 import { startCase } from 'lodash';
+import BoardNavbar from '../../_components/board-navbar';
 
 interface BoardIdLayoutProps {
   children?: React.ReactNode;
@@ -34,11 +35,12 @@ export async function generateMetadata({ params }: BoardIdLayoutProps) {
 
 async function BoardIdLayout({ children, params }: BoardIdLayoutProps) {
   const { orgId } = auth();
+  const { boardId } = params;
 
   if (!orgId) {
     redirect('select-org');
   }
-  const board = await getBoard(params.boardId, orgId);
+  const board = await getBoard(boardId, orgId);
 
   if (!board) {
     notFound();
@@ -58,6 +60,7 @@ async function BoardIdLayout({ children, params }: BoardIdLayoutProps) {
       className='relative h-full bg-no-repeat bg-cover bg-center'
       style={{ backgroundImage: `url(${imageFullUrl})` }}
     >
+      <BoardNavbar id={boardId} />
       <main className='relative pt-28 h-full'>{children}</main>
     </div>
   );
