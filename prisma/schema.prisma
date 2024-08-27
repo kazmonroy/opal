@@ -33,7 +33,7 @@ model List {
   order   Int
   boardId String
   board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
-  Card    Card[]
+  cards   Card[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
