@@ -1,8 +1,15 @@
+"use client";
+import { toast } from "sonner";
+import { ElementRef, forwardRef, useRef } from "react";
+import { Plus, X } from "lucide-react";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import { useParams } from "next/navigation";
+
+import { createCard } from "@/actions/create-card";
 import FormSubmit from "@/components/form/form-submit";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { Button } from "@/components/ui";
-import { Plus, X } from "lucide-react";
-import { forwardRef } from "react";
+import { useAction } from "@/hooks/use-action";
 
 interface CardFormProps {
   listId: string;
@@ -13,6 +20,24 @@ interface CardFormProps {
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
   ({ listId, enableEditing, disableEditing, isEditing }, ref) => {
+    const params = useParams();
+    const formRef = useRef<ElementRef<"form">>(null);
+
+    const { execute, fieldErrors } = useAction(createCard, {
+      onSuccess: (data) => {
+        toast.success(`Card "${data.title}" created`);
+      },
+      onError: (data) => {
+        toast.error(data);
+      },
+    });
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        disableEditing();
+      }
+    };
+
     if (isEditing) {
       return (
         <form action="" className="m-1 py-0.5 px-1 space-y-4">
@@ -21,6 +46,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
             onKeyDown={() => {}}
             ref={ref}
             placeholder="Enter a title for this card..."
+            errors={fieldErrors}
           />
           <input hidden id="listId" name="listId" value={listId} />
           <div className="flex items-center gap-x-2">
