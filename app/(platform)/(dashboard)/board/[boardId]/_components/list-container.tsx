@@ -8,6 +8,7 @@ import ListForm from "./list-form";
 import ListItem from "./list-item";
 import { useAction } from "@/hooks/use-action";
 import { updateListOrder } from "@/actions/update-list-order";
+import { updateCardOrder } from "@/actions/update-card-order";
 
 interface ListContainerProps {
   boardId: string;
@@ -34,6 +35,15 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
       },
     }
   );
+
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: () => {
+      toast.success("Card reordered");
+    },
+    onError: (err) => {
+      toast.error(err);
+    },
+  });
 
   useEffect(() => {
     setOrderedData(data);
@@ -98,6 +108,7 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
         sourceList.cards = reorderedCards;
 
         setOrderedData(newOrderedData);
+        executeUpdateCardOrder({ items: reorderedCards, boardId });
       } else {
         // Moved card from the source list
         const [movedCard] = sourceList.cards.splice(source.index, 1);
@@ -119,6 +130,10 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
         });
 
         setOrderedData(newOrderedData);
+        executeUpdateCardOrder({
+          items: destinationList.cards,
+          boardId,
+        });
       }
     }
   };
