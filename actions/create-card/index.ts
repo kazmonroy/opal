@@ -2,9 +2,9 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { Board, List } from "@prisma/client";
+import { Card } from "@prisma/client";
 import { InputType, ReturnType } from "./types";
-import { createListSchema } from "./schema";
+import { createCardSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/db";
 
@@ -17,39 +17,37 @@ async function hanlder(data: InputType): Promise<ReturnType> {
     };
   }
 
-  const { title, boardId } = data;
+  const { title, boardId, listId } = data;
 
-  let list: List;
+  let card: Card;
   try {
-    const board = await db.board.findUnique({
+    const list = await db.list.findUnique({
       where: {
-        id: boardId,
-        orgId,
+        id: listId,
+        boardId,
+        board: {
+          orgId,
+        },
       },
     });
-    if (!board) {
+
+    if (!list) {
       return {
-        error: "Board not found",
+        error: "List not found.",
       };
     }
 
-    const lastList = await db.list.findFirst({
+    const lastCard = await db.card.findFirst({
       where: {
-        board,
+        listId,
       },
       orderBy: { order: "desc" },
       select: { order: true },
     });
 
-    const newOrder = lastList ? lastList.order + 1 : 1;
+    const newOrder = lastCard ? lastCard.order + 1 : 1;
 
-    list = await db.list.create({
-      data: {
-        title,
-        boardId,
-        order: newOrder,
-      },
-    });
+    card = await db.card.create({ data: { title, listId, order: newOrder } });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
@@ -64,8 +62,8 @@ async function hanlder(data: InputType): Promise<ReturnType> {
 
   revalidatePath(`/board/${boardId}`);
   return {
-    data: list,
+    data: card,
   };
 }
 
-export const createList = createSafeAction(createListSchema, hanlder);
+export const createCard = createSafeAction(createCardSchema, hanlder);

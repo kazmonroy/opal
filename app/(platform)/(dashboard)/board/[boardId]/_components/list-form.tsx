@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { toast } from 'sonner';
-import { Plus } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
-import { useEventListener, useOnClickOutside } from 'usehooks-ts';
-import { ElementRef, useRef, useState } from 'react';
+import { toast } from "sonner";
+import { Plus } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import { ElementRef, useRef, useState } from "react";
 
-import { Button } from '@/components/ui';
-import ListWrapper from './list-wrapper';
-import { FormInput } from '@/components/form/form-input';
-import FormSubmit from '@/components/form/form-submit';
-import { useAction } from '@/hooks/use-action';
-import { createList } from '@/actions/';
+import { Button } from "@/components/ui";
+import ListWrapper from "./list-wrapper";
+import { FormInput } from "@/components/form/form-input";
+import FormSubmit from "@/components/form/form-submit";
+import { useAction } from "@/hooks/use-action";
+import { createList } from "@/actions/";
 
 function ListForm() {
   const params = useParams();
   const router = useRouter();
-  const formrRef = useRef<ElementRef<'form'>>(null);
-  const inputRef = useRef<ElementRef<'input'>>(null);
+  const formRef = useRef<ElementRef<"form">>(null);
+  const inputRef = useRef<ElementRef<"input">>(null);
   const [isEditing, setIsEditing] = useState(false);
   const { execute, fieldErrors } = useAction(createList, {
     onSuccess: (data) => {
@@ -42,39 +42,44 @@ function ListForm() {
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       disableEditing();
     }
   };
 
   const onSubmit = (formData: FormData) => {
-    const title = formData.get('title') as string;
-    const boardId = formData.get('boardId') as string;
+    const title = formData.get("title") as string;
+    const boardId = formData.get("boardId") as string;
     execute({ title, boardId });
   };
 
-  useEventListener('keydown', onKeyDown);
-  useOnClickOutside(formrRef, disableEditing);
+  useEventListener("keydown", onKeyDown);
+  useOnClickOutside(formRef, disableEditing);
 
   if (isEditing) {
     return (
       <ListWrapper>
         <form
           action={onSubmit}
-          ref={formrRef}
-          className='w-full p-3 rounded-md bg-slate-50 space-y-4 shadow-md'
+          ref={formRef}
+          className="w-full p-3 rounded-md bg-slate-50 space-y-4 shadow-md"
         >
           <FormInput
             ref={inputRef}
-            id='title'
-            defaultValue=''
-            placeholder='Enter list title'
+            id="title"
+            defaultValue=""
+            placeholder="Enter list title"
             errors={fieldErrors}
-            className='text-sm bg-slate-50 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition'
+            className="text-sm bg-slate-50 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
           />
-          <input type='submit' value={params.boardId} name='boardId' hidden />
+          <input
+            type="submit"
+            name="boardId"
+            hidden
+            defaultValue={params.boardId}
+          />
 
-          <FormSubmit variant='outline' className='w-full'>
+          <FormSubmit variant="outline" className="w-full">
             Add list
           </FormSubmit>
         </form>
@@ -86,11 +91,11 @@ function ListForm() {
     <ListWrapper>
       <Button
         onClick={enableEditing}
-        size='lg'
-        variant='outline'
-        className='justify-start w-full px-4 h-[3rem]'
+        size="lg"
+        variant="outline"
+        className="justify-start w-full px-4 h-[3rem]"
       >
-        <Plus className='w-4 h-4 mr-2' />
+        <Plus className="w-4 h-4 mr-2" />
         Create list
       </Button>
     </ListWrapper>
