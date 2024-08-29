@@ -1,10 +1,13 @@
 "use client";
 
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { ListWithCards } from "@/types";
 import ListForm from "./list-form";
 import ListItem from "./list-item";
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
 
 interface ListContainerProps {
   boardId: string;
@@ -20,6 +23,17 @@ function reOrder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export default function ListContainer({ boardId, data }: ListContainerProps) {
   const [orderedData, setOrderedData] = useState(data);
+  const { execute: executeUpdateListOrder, fieldErrors } = useAction(
+    updateListOrder,
+    {
+      onSuccess: () => {
+        toast.success("List reordered");
+      },
+      onError: (err) => {
+        toast.error(err);
+      },
+    }
+  );
 
   useEffect(() => {
     setOrderedData(data);
