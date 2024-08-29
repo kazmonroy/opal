@@ -73,7 +73,13 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
             placeholder="Enter a title for this card..."
             errors={fieldErrors}
           />
-          <input hidden id="listId" name="listId" value={listId} />
+          <input
+            hidden
+            type="text"
+            id="listId"
+            name="listId"
+            defaultValue={listId}
+          />
           <div className="flex items-center gap-x-2">
             <FormSubmit>Add card</FormSubmit>
             <Button onClick={disableEditing} size="sm" variant="ghost">

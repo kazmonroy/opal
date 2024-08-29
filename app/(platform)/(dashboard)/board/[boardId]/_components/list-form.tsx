@@ -72,7 +72,12 @@ function ListForm() {
             errors={fieldErrors}
             className="text-sm bg-slate-50 px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition"
           />
-          <input type="submit" value={params.boardId} name="boardId" hidden />
+          <input
+            type="submit"
+            name="boardId"
+            hidden
+            defaultValue={params.boardId}
+          />
 
           <FormSubmit variant="outline" className="w-full">
             Add list
