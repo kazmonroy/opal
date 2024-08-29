@@ -1,7 +1,8 @@
 "use client";
 
 import { forwardRef, KeyboardEventHandler } from "react";
-import { Label } from "@/components/ui";
+import { Label, Textarea } from "@/components/ui";
+import { cn } from "@/lib/utils";
 
 interface FormTextareaProps {
   id: string;
@@ -45,6 +46,23 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
               {label}
             </Label>
           ) : null}
+          <Textarea
+            ref={ref}
+            id={id}
+            name={id}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            onBlur={onBlur}
+            onClick={onClick}
+            required={required}
+            placeholder={placeholder}
+            className={cn(
+              "resize-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 outline-none shadow-sm",
+              className
+            )}
+            aria-describedby={`${id}-error`}
+            defaultValue={defaultValue}
+          />
         </div>
       </div>
     );
