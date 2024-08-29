@@ -57,6 +57,8 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
       );
       // OPTIMISTIC UPDATE
       setOrderedData(items);
+
+      executeUpdateListOrder({ items, boardId });
     }
 
     // User moves a card
