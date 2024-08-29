@@ -38,6 +38,16 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
       }
     };
 
+    useEventListener("keydown", onKeyDown);
+    useOnClickOutside(formRef, disableEditing);
+
+    const onTextareaKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        formRef.current?.requestSubmit();
+      }
+    };
+
     if (isEditing) {
       return (
         <form action="" className="m-1 py-0.5 px-1 space-y-4">
