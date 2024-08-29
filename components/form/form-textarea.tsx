@@ -1,8 +1,10 @@
 "use client";
 
+import { useFormStatus } from "react-dom";
 import { forwardRef, KeyboardEventHandler } from "react";
 import { Label, Textarea } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { FormErrors } from "./form-errors";
 
 interface FormTextareaProps {
   id: string;
@@ -35,6 +37,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
     },
     ref
   ) => {
+    const { pending } = useFormStatus();
     return (
       <div className="space-y-2 w-full">
         <div className="space-y-1 w-full">
@@ -50,7 +53,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             ref={ref}
             id={id}
             name={id}
-            disabled={disabled}
+            disabled={disabled || pending}
             onKeyDown={onKeyDown}
             onBlur={onBlur}
             onClick={onClick}
@@ -64,6 +67,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             defaultValue={defaultValue}
           />
         </div>
+        <FormErrors id={id} errors={errors} />
       </div>
     );
   }
