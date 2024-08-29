@@ -82,6 +82,27 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
         sourceList.cards = reorderedCards;
 
         setOrderedData(newOrderedData);
+      } else {
+        // Moved card from the source list
+        const [movedCard] = sourceList.cards.splice(source.index, 1);
+
+        // Assign the new listId to the moved card
+        movedCard.listId = destination.droppableId;
+
+        // Add the card to the destination list
+        destinationList.cards.splice(destination.index, 0, movedCard);
+
+        // Reorder the destination list
+        sourceList.cards.forEach((card, index) => {
+          card.order = index;
+        });
+
+        // Update the order of the destination list
+        destinationList.cards.forEach((card, index) => {
+          card.order = index;
+        });
+
+        setOrderedData(newOrderedData);
       }
     }
   };
