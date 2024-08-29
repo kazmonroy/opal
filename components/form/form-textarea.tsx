@@ -16,7 +16,7 @@ interface FormTextareaProps {
   className?: string;
   onBlur?: () => void;
   onClick?: () => void;
-  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement> | undefined;
   defaultValue?: string;
 }
 

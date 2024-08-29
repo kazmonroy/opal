@@ -1,6 +1,6 @@
 "use client";
 import { toast } from "sonner";
-import { ElementRef, forwardRef, useRef } from "react";
+import { ElementRef, forwardRef, KeyboardEventHandler, useRef } from "react";
 import { Plus, X } from "lucide-react";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { useParams } from "next/navigation";
@@ -41,7 +41,9 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
     useEventListener("keydown", onKeyDown);
     useOnClickOutside(formRef, disableEditing);
 
-    const onTextareaKeyDown = (e: KeyboardEvent) => {
+    const onTextareaKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (
+      e
+    ) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         formRef.current?.requestSubmit();
@@ -65,7 +67,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
         >
           <FormTextarea
             id="title"
-            onKeyDown={() => {}}
+            onKeyDown={onTextareaKeyDown}
             ref={ref}
             placeholder="Enter a title for this card..."
             errors={fieldErrors}
