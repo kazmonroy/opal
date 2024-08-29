@@ -44,6 +44,46 @@ export default function ListContainer({ boardId, data }: ListContainerProps) {
       // OPTIMISTIC UPDATE
       setOrderedData(items);
     }
+
+    // User moves a card
+    if (type === "card") {
+      const newOrderedData = [...orderedData];
+      const sourceList = newOrderedData.find(
+        (list) => list.id === source.droppableId
+      );
+      const destinationList = newOrderedData.find(
+        (list) => list.id === destination.droppableId
+      );
+
+      if (!sourceList || !destinationList) return;
+
+      // Check if cards exist in sourceList
+      if (!sourceList.cards) {
+        sourceList.cards = [];
+      }
+
+      // Check if cards exist in destinationList
+      if (!destinationList.cards) {
+        destinationList.cards = [];
+      }
+
+      // Moving the card in the same list
+      if (source.droppableId === destination.droppableId) {
+        const reorderedCards = reOrder(
+          sourceList.cards,
+          source.index,
+          destination.index
+        );
+
+        reorderedCards.forEach((card, index) => {
+          card.order = index;
+        });
+
+        sourceList.cards = reorderedCards;
+
+        setOrderedData(newOrderedData);
+      }
+    }
   };
 
   return (
