@@ -69,6 +69,7 @@ function FormPicker({ id, errors }: FormPickerProps) {
             }}
           >
             <input
+              readOnly
               type="radio"
               id={id}
               name={id}
