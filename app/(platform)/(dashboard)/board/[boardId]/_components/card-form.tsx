@@ -5,7 +5,7 @@ import { Plus, X } from "lucide-react";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { useParams } from "next/navigation";
 
-import { createCard } from "@/actions/create-card";
+import { createCard } from "@/actions/";
 import FormSubmit from "@/components/form/form-submit";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { Button } from "@/components/ui";
