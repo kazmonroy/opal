@@ -28,6 +28,7 @@ function Description({ data }: DescriptionProps) {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
+      setIsEditing(false);
     },
     onError: (error) => {
       toast.error(error);
