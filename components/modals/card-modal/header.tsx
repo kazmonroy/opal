@@ -10,7 +10,6 @@ import { useParams } from "next/navigation";
 import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions";
 import { toast } from "sonner";
-import { useCardModal } from "@/hooks/use-card-modal";
 
 interface HeaderProps {
   data: CardWithList;
