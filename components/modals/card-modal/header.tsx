@@ -7,6 +7,9 @@ import { CardWithList } from "@/types";
 import { Skeleton } from "@/components/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useAction } from "@/hooks/use-action";
+import { updateCard } from "@/actions";
+import { toast } from "sonner";
 
 interface HeaderProps {
   data: CardWithList;
@@ -17,14 +20,32 @@ function Header({ data }: HeaderProps) {
   const queryClient = useQueryClient();
   const params = useParams();
   const [headerTitle, setHeaderTitle] = useState(title);
+
+  const { execute, fieldErrors } = useAction(updateCard, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["card", data.id],
+      });
+      toast.success(`Card renamed to ${data.title}`);
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
   const onBlur = () => {
     inputRef.current?.form?.requestSubmit();
   };
 
   const onSubmit = (formData: FormData) => {
-    const newTitle = formData.get("title") as string;
+    const title = formData.get("title") as string;
+    const boardId = params.boardId as string;
 
-    console.log("newTitle", newTitle);
+    if (title === headerTitle) {
+      console.log("Title is the same");
+      return;
+    }
+
+    execute({ id: data.id, boardId, title });
   };
 
   return (
@@ -37,6 +58,7 @@ function Header({ data }: HeaderProps) {
             ref={inputRef}
             defaultValue={headerTitle}
             onBlur={onBlur}
+            errors={fieldErrors}
             className="font-semibold text-xl px-1 text-slate-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-slate-50 focus-visible:border-input mb-0.5 truncate"
           />
         </form>
