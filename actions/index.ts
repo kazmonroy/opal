@@ -3,6 +3,7 @@ export { updateBoard } from "./update-board/index";
 export { deleteBoard } from "./delete-board/index";
 
 export { createCard } from "./create-card/index";
+export { updateCard } from "./update-card/index";
 export { updateCardOrder } from "./update-card-order/index";
 
 export { copyList } from "./copy-list/index";
