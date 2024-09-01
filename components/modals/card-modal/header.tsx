@@ -29,6 +29,7 @@ function Header({ data }: HeaderProps) {
         queryKey: ["card", data.id],
       });
       toast.success(`Card renamed to ${data.title}`);
+      setHeaderTitle(data.title);
       onClose();
     },
     onError: (error) => {
