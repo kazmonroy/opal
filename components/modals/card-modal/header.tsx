@@ -18,7 +18,6 @@ interface HeaderProps {
 function Header({ data }: HeaderProps) {
   const { title, list } = data;
   const inputRef = useRef<ElementRef<"input">>(null);
-  const onClose = useCardModal((state) => state.onClose);
   const queryClient = useQueryClient();
   const params = useParams();
   const [headerTitle, setHeaderTitle] = useState(title);
@@ -30,7 +29,6 @@ function Header({ data }: HeaderProps) {
       });
       toast.success(`Card renamed to ${data.title}`);
       setHeaderTitle(data.title);
-      onClose();
     },
     onError: (error) => {
       toast.error(error);
