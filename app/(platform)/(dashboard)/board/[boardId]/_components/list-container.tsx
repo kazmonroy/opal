@@ -7,8 +7,7 @@ import { ListWithCards } from "@/types";
 import ListForm from "./list-form";
 import ListItem from "./list-item";
 import { useAction } from "@/hooks/use-action";
-import { updateListOrder } from "@/actions/update-list-order";
-import { updateCardOrder } from "@/actions/update-card-order";
+import { updateListOrder, updateCardOrder } from "@/actions/";
 
 interface ListContainerProps {
   boardId: string;
@@ -24,17 +23,14 @@ function reOrder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export default function ListContainer({ boardId, data }: ListContainerProps) {
   const [orderedData, setOrderedData] = useState(data);
-  const { execute: executeUpdateListOrder, fieldErrors } = useAction(
-    updateListOrder,
-    {
-      onSuccess: () => {
-        toast.success("List reordered");
-      },
-      onError: (err) => {
-        toast.error(err);
-      },
-    }
-  );
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("List reordered");
+    },
+    onError: (err) => {
+      toast.error(err);
+    },
+  });
 
   const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
     onSuccess: () => {
