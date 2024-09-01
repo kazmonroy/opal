@@ -19,30 +19,36 @@ function Actions({ data }: ActionsProps) {
   const queryClient = useQueryClient();
   const onClose = useCardModal((state) => state.onClose);
 
-  const { execute: executeDelete } = useAction(deleteCard, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ["card", data.id],
-      });
-      toast.success(`Card ${data.title} deleted`);
-      onClose();
-    },
-    onError: (error) => {
-      toast.error(error);
-    },
-  });
-  const { execute: executeCopy } = useAction(copyCard, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ["card", data.id],
-      });
-      toast.success(`Card "${data.title}" created`);
-      onClose();
-    },
-    onError: (error) => {
-      toast.error(error);
-    },
-  });
+  const { execute: executeDelete, isLoading: isLoadingDelete } = useAction(
+    deleteCard,
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: ["card", data.id],
+        });
+        toast.success(`Card ${data.title} deleted`);
+        onClose();
+      },
+      onError: (error) => {
+        toast.error(error);
+      },
+    }
+  );
+  const { execute: executeCopy, isLoading: isLoadingCopy } = useAction(
+    copyCard,
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: ["card", data.id],
+        });
+        toast.success(`Card "${data.title}" created`);
+        onClose();
+      },
+      onError: (error) => {
+        toast.error(error);
+      },
+    }
+  );
 
   const handleCopyCard = () => {
     executeCopy({ boardId, id: data.id });
@@ -60,6 +66,7 @@ function Actions({ data }: ActionsProps) {
           size="sm"
           variant="outline"
           className="w-full"
+          disabled={isLoadingCopy}
         >
           <Copy className="w-4 h-4 mr-2 text-slate-500" />
           Copy
@@ -69,6 +76,7 @@ function Actions({ data }: ActionsProps) {
           size="sm"
           variant="outline"
           className="w-full"
+          disabled={isLoadingDelete}
         >
           <Trash className="w-4 h-4 mr-2 text-slate-500" />
           Delete
