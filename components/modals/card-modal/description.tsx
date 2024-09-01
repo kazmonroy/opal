@@ -2,13 +2,15 @@
 
 import { Skeleton } from "@/components/ui";
 import { CardWithList } from "@/types";
+import { AlignLeft } from "lucide-react";
 
 interface DescriptionProps {
   data: CardWithList;
 }
 function Description({ data }: DescriptionProps) {
   return (
-    <div>
+    <div className="flex items-start gap-x-3 w-full justify-start">
+      <AlignLeft className="h-5 w-5 mt-0.5 text-slate-500" />
       {data.description}
       Description here
     </div>
