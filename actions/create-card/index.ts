@@ -55,7 +55,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to create list.",
+        error: "Failed to create card",
       };
     }
   }

@@ -43,7 +43,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to reoder list.",
+        error: "Failed to reoder list",
       };
     }
   }

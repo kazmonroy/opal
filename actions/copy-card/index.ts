@@ -65,7 +65,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to copy list",
+        error: "Failed to copy card",
       };
     }
   }
