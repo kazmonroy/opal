@@ -15,6 +15,7 @@ interface ActionsProps {
 }
 function Actions({ data }: ActionsProps) {
   const params = useParams();
+  const boardId = params.boardId as string;
   const queryClient = useQueryClient();
   const onClose = useCardModal((state) => state.onClose);
 
@@ -36,21 +37,30 @@ function Actions({ data }: ActionsProps) {
         queryKey: ["card", data.id],
       });
       toast.success(`Card "${data.title}" created`);
+      onClose();
     },
     onError: (error) => {
       toast.error(error);
     },
   });
 
+  const handleCopyCard = () => {
+    executeCopy({ boardId, id: data.id });
+  };
+
   const handleDeleteCard = () => {
-    const boardId = params.boardId as string;
     executeDelete({ boardId, id: data.id });
   };
   return (
     <div className="space-y-2 mt-1">
       <p className="text-sm font-semibold">Actions</p>
       <div className="flex md:flex-col gap-2">
-        <Button size="sm" variant="outline" className="w-full">
+        <Button
+          onClick={handleCopyCard}
+          size="sm"
+          variant="outline"
+          className="w-full"
+        >
           <Copy className="w-4 h-4 mr-2 text-slate-500" />
           Copy
         </Button>
