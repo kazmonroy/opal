@@ -1,8 +1,12 @@
 "use client";
 
 import { Button, Skeleton } from "@/components/ui";
+import { CardWithList } from "@/types";
 
-function Actions() {
+interface ActionsProps {
+  data: CardWithList;
+}
+function Actions({ data }: ActionsProps) {
   return (
     <div>
       Actions
