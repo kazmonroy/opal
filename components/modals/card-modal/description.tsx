@@ -12,6 +12,7 @@ import { FormTextarea } from "@/components/form/form-textarea";
 import FormSubmit from "@/components/form/form-submit";
 import { updateCard } from "@/actions";
 import { useAction } from "@/hooks/use-action";
+import { cn } from "@/lib/utils";
 
 interface DescriptionProps {
   data: CardWithList;
@@ -76,6 +77,7 @@ function Description({ data }: DescriptionProps) {
         {isEditing ? (
           <form action={onSubmit} ref={formRef} className="space-y-2">
             <FormTextarea
+              ref={textareaRef}
               id="description"
               className="w-full mt-2"
               placeholder="Add more details..."
@@ -98,7 +100,10 @@ function Description({ data }: DescriptionProps) {
           <div
             onClick={enableEditing}
             role="button"
-            className="min-h-[4.5rem] bg-slate-100 text-slate-500 text-sm font-medium py-3 px-3 rounded-md"
+            className={cn(
+              "min-h-[4.5rem] text-slate-500 text-sm font-medium py-3 px-3 rounded-md",
+              data.description ? "bg-white text-slate-700 px-0" : "bg-slate-100"
+            )}
           >
             {data.description ?? "Add more details..."}
           </div>
