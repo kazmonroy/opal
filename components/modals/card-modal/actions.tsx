@@ -5,6 +5,7 @@ import { Button, Skeleton } from "@/components/ui";
 function Actions() {
   return (
     <div>
+      Actions
       <div className="flex items-center gap-x-2">
         <Button size="sm">Copy</Button>
         <Button size="sm" variant="destructive">
