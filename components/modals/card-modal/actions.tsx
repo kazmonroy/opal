@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui";
+import { Button, Skeleton } from "@/components/ui";
 
 function Actions() {
   return (
@@ -15,4 +15,13 @@ function Actions() {
   );
 }
 
+Actions.Skeleton = function ActionsSkeleton() {
+  return (
+    <div className="space-y-2 mt-2">
+      <Skeleton className="w-20 h-4 bg-slate-200" />
+      <Skeleton className="w-full h-8 bg-slate-200" />
+      <Skeleton className="w-full h-8 bg-slate-200" />
+    </div>
+  );
+};
 export default Actions;
