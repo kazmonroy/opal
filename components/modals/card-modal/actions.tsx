@@ -58,7 +58,7 @@ function Actions({ data }: ActionsProps) {
     executeDelete({ boardId, id: data.id });
   };
   return (
-    <div className="space-y-2 mt-1">
+    <div className="space-y-2 md:mt-1 mt-6">
       <p className="text-sm font-semibold">Actions</p>
       <div className="flex md:flex-col gap-2">
         <Button
