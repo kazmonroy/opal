@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui";
 import { useCardModal } from "@/hooks/use-card-modal";
 import { CardWithList } from "@/types";
 import { fetcher } from "@/lib/fetcher";
+import Header from "./header";
 
 export const CardModal = () => {
   const id = useCardModal((state) => state.id);
@@ -15,9 +16,13 @@ export const CardModal = () => {
     queryKey: ["card", id],
     queryFn: () => fetcher(`/api/cards/${id}`),
   });
+
+  if (!cardData) return null;
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>{cardData?.title}</DialogContent>
+      <DialogContent>
+        <Header data={cardData} />
+      </DialogContent>
     </Dialog>
   );
 };
