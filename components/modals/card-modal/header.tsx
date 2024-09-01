@@ -4,6 +4,7 @@ import { Layout } from "lucide-react";
 import { ElementRef, useRef, useState } from "react";
 import { FormInput } from "@/components/form/form-input";
 import { CardWithList } from "@/types";
+import { Skeleton } from "@/components/ui";
 
 interface HeaderProps {
   data: CardWithList;
@@ -29,5 +30,17 @@ function Header({ data }: HeaderProps) {
     </div>
   );
 }
+
+Header.Skeleton = function HeaderSkeleton() {
+  return (
+    <div className="flex items-start gap-x-3 mb-6 ">
+      <Skeleton className="h-6 w-6 mt-1 bg-neutral-200" />
+      <div>
+        <Skeleton className="w-24 h-6 mb-1 bg-neutral-200" />
+        <Skeleton className="w-12 h-4 bg-neutral-200" />
+      </div>
+    </div>
+  );
+};
 
 export default Header;
