@@ -7,7 +7,12 @@ interface DescriptionProps {
   data: CardWithList;
 }
 function Description({ data }: DescriptionProps) {
-  return <div>{data.description}</div>;
+  return (
+    <div>
+      {data.description}
+      Description here
+    </div>
+  );
 }
 
 Description.Skeleton = function DescriptionSkeleton() {
