@@ -1,13 +1,51 @@
 "use client";
 
+import { toast } from "sonner";
 import { Copy, Trash } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { CardWithList } from "@/types";
 import { Button, Skeleton } from "@/components/ui";
+import { useAction } from "@/hooks/use-action";
+import { deleteCard, copyCard } from "@/actions";
+import { useCardModal } from "@/hooks/use-card-modal";
 
 interface ActionsProps {
   data: CardWithList;
 }
 function Actions({ data }: ActionsProps) {
+  const params = useParams();
+  const queryClient = useQueryClient();
+  const onClose = useCardModal((state) => state.onClose);
+
+  const { execute: executeDelete } = useAction(deleteCard, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["card", data.id],
+      });
+      toast.success(`Card ${data.title} deleted`);
+      onClose();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+  const { execute: executeCopy } = useAction(copyCard, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["card", data.id],
+      });
+      toast.success(`Card "${data.title}" created`);
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const handleDeleteCard = () => {
+    const boardId = params.boardId as string;
+    executeDelete({ boardId, id: data.id });
+  };
   return (
     <div className="space-y-2 mt-1">
       <p className="text-sm font-semibold">Actions</p>
@@ -16,7 +54,12 @@ function Actions({ data }: ActionsProps) {
           <Copy className="w-4 h-4 mr-2 text-slate-500" />
           Copy
         </Button>
-        <Button size="sm" variant="outline" className="w-full">
+        <Button
+          onClick={handleDeleteCard}
+          size="sm"
+          variant="outline"
+          className="w-full"
+        >
           <Trash className="w-4 h-4 mr-2 text-slate-500" />
           Delete
         </Button>
