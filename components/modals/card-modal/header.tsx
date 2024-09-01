@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions";
 import { toast } from "sonner";
+import { useCardModal } from "@/hooks/use-card-modal";
 
 interface HeaderProps {
   data: CardWithList;
@@ -17,6 +18,7 @@ interface HeaderProps {
 function Header({ data }: HeaderProps) {
   const { title, list } = data;
   const inputRef = useRef<ElementRef<"input">>(null);
+  const onClose = useCardModal((state) => state.onClose);
   const queryClient = useQueryClient();
   const params = useParams();
   const [headerTitle, setHeaderTitle] = useState(title);
@@ -27,6 +29,7 @@ function Header({ data }: HeaderProps) {
         queryKey: ["card", data.id],
       });
       toast.success(`Card renamed to ${data.title}`);
+      onClose();
     },
     onError: (error) => {
       toast.error(error);
@@ -41,7 +44,6 @@ function Header({ data }: HeaderProps) {
     const boardId = params.boardId as string;
 
     if (title === headerTitle) {
-      console.log("Title is the same");
       return;
     }
 
