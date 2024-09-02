@@ -1,19 +1,20 @@
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs/server';
-import { revalidatePath } from 'next/cache';
-import { List } from '@prisma/client';
-import { InputType, ReturnType } from './types';
-import { copyListSchema } from './schema';
-import { createSafeAction } from '@/lib/create-safe-action';
-import { db } from '@/db';
+import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
+import { List } from "@prisma/client";
+import { InputType, ReturnType } from "./types";
+import { copyListSchema } from "./schema";
+import { createSafeAction } from "@/lib/create-safe-action";
+import { db } from "@/db";
+import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 
 async function hanlder(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
-      error: 'Not Authorized',
+      error: "Not Authorized",
     };
   }
 
@@ -36,13 +37,13 @@ async function hanlder(data: InputType): Promise<ReturnType> {
 
     if (!listToCopy) {
       return {
-        error: 'List not found',
+        error: "List not found",
       };
     }
 
     const lastList = await db.list.findFirst({
       where: { boardId },
-      orderBy: { order: 'desc' },
+      orderBy: { order: "desc" },
       select: {
         order: true,
       },
@@ -68,6 +69,13 @@ async function hanlder(data: InputType): Promise<ReturnType> {
         cards: true,
       },
     });
+
+    await createAuditLog({
+      entityId: list.id,
+      entityType: ENTITY_TYPE.LIST,
+      entityTitle: list.title,
+      action: ACTION.CREATE,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
@@ -75,7 +83,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: 'Failed to copy list',
+        error: "Failed to copy list",
       };
     }
   }
