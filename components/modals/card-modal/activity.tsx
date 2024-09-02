@@ -1,8 +1,13 @@
 "use client";
 
+import { AuditLog } from "@prisma/client";
 import { Skeleton } from "@/components/ui";
 
-function Activity() {
+interface ActivityProps {
+  data: AuditLog[];
+}
+
+function Activity({ data }: ActivityProps) {
   return <div>Activity</div>;
 }
 
