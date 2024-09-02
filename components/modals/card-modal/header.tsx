@@ -10,7 +10,6 @@ import { useParams } from "next/navigation";
 import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions";
 import { toast } from "sonner";
-import { useCardModal } from "@/hooks/use-card-modal";
 
 interface HeaderProps {
   data: CardWithList;
@@ -51,7 +50,7 @@ function Header({ data }: HeaderProps) {
 
   return (
     <div className="flex items-start gap-x-3 mb-6 w-full">
-      <Layout className="h-4 w-4 mt-1 text-slate-700 " />
+      <Layout className="h-5 w-5 mt-1 text-slate-500" />
       <div className="w-full">
         <form action={onSubmit}>
           <FormInput

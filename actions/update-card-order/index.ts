@@ -46,7 +46,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to reoder cards.",
+        error: "Failed to reoder cards",
       };
     }
   }

@@ -8,7 +8,8 @@ export const updateCardSchema = z.object({
     })
     .min(3, {
       message: "Title must be at least 3 characters",
-    }),
+    })
+    .optional(),
   description: z.optional(
     z
       .string({

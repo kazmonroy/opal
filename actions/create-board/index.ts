@@ -1,31 +1,31 @@
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs/server';
-import { InputType, ReturnType } from './types';
-import { db } from '@/db';
-import { Board } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
-import { createSafeAction } from '@/lib/create-safe-action';
-import { createBoardSchema } from './schema';
+import { auth } from "@clerk/nextjs/server";
+import { InputType, ReturnType } from "./types";
+import { db } from "@/db";
+import { Board } from "@prisma/client";
+import { revalidatePath } from "next/cache";
+import { createSafeAction } from "@/lib/create-safe-action";
+import { createBoardSchema } from "./schema";
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
-      error: 'Not Authorized',
+      error: "Not Authorized",
     };
   }
   const { title, image } = data;
 
   if (!image) {
     return {
-      error: 'Missing fields. Failed to create board.',
+      error: "Missing fields. Failed to create board.",
     };
   }
 
   const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
-    image.split('|');
+    image.split("|");
 
   let board: Board;
   try {
@@ -47,7 +47,7 @@ async function handler(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: 'Something went wrong',
+        error: "Failed to create board",
       };
     }
   }
