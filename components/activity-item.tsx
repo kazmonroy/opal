@@ -17,7 +17,7 @@ function ActivityItem({ data }: ActivityItemProps) {
           <span className="font-semibold lowercase text-slate-700">
             {data.userName}
           </span>
-          {generateLogMessage(data)}
+          {` ${generateLogMessage(data)}`}
         </p>
         <p className="text-xs text-muted-foreground">
           {format(new Date(data.createdAt), "MMM d, yyyy 'at' h:mm a ")}

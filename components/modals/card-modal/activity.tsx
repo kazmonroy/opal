@@ -3,6 +3,7 @@
 import { AuditLog } from "@prisma/client";
 import { ActivityIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui";
+import ActivityItem from "@/components/activity-item";
 
 interface ActivityProps {
   data: AuditLog[];
@@ -17,7 +18,7 @@ function Activity({ data }: ActivityProps) {
 
         <ol className="mt-2 space-y-4">
           {data.map((log) => (
-            <li key={log.id}>{log.entityTitle}</li>
+            <ActivityItem key={log.entityId} data={log} />
           ))}
         </ol>
       </div>

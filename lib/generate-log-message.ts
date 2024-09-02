@@ -1,5 +1,10 @@
 import { AuditLog } from "@prisma/client";
-import { ACTION } from "./create-audit-log";
+
+enum ACTION {
+  CREATE = "CREATE",
+  UPDATE = "UPDATE",
+  DELETE = "DELETE",
+}
 
 export function generateLogMessage(log: AuditLog) {
   const { action, entityType, entityTitle } = log;
