@@ -6,6 +6,7 @@ import { Card } from "@prisma/client";
 import { InputType, ReturnType } from "./types";
 import { updateCardSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
+import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 import { db } from "@/db";
 
 async function hanlder(data: InputType): Promise<ReturnType> {
@@ -33,6 +34,12 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       data: {
         ...values,
       },
+    });
+    await createAuditLog({
+      entityId: card.id,
+      entityType: ENTITY_TYPE.CARD,
+      entityTitle: card.title,
+      action: ACTION.UPDATE,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {

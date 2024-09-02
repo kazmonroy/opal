@@ -2,10 +2,11 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { Board, List } from "@prisma/client";
+import { List } from "@prisma/client";
 import { InputType, ReturnType } from "./types";
 import { createListSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
+import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 import { db } from "@/db";
 
 async function hanlder(data: InputType): Promise<ReturnType> {
@@ -49,6 +50,13 @@ async function hanlder(data: InputType): Promise<ReturnType> {
         boardId,
         order: newOrder,
       },
+    });
+
+    await createAuditLog({
+      entityId: list.id,
+      entityType: ENTITY_TYPE.LIST,
+      entityTitle: list.title,
+      action: ACTION.CREATE,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
