@@ -61,6 +61,7 @@ model AuditLog {
   action    String 
   entityId  String
   entityType  String
+  entityTitle  String
   userId    String
   userImage String
   userName  String
