@@ -52,12 +52,12 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       },
     });
 
-    await createAuditLog({
-      entityId: list.id,
-      entityType: ENTITY_TYPE.LIST,
-      entityTitle: list.title,
-      action: ACTION.CREATE,
-    });
+    // await createAuditLog({
+    //   entityId: list.id,
+    //   entityType: ENTITY_TYPE.LIST,
+    //   entityTitle: list.title,
+    //   action: ACTION.CREATE,
+    // });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {

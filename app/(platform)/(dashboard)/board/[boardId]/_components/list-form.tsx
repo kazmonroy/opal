@@ -49,7 +49,8 @@ function ListForm() {
 
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
-    const boardId = formData.get("boardId") as string;
+    const boardId = params.boardId as string;
+
     execute({ title, boardId });
   };
 
