@@ -18,7 +18,7 @@ function Activity({ data }: ActivityProps) {
 
         <ol className="mt-2 space-y-4">
           {data.map((log) => (
-            <ActivityItem key={log.entityId} data={log} />
+            <ActivityItem key={log.id} data={log} />
           ))}
         </ol>
       </div>
