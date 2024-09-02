@@ -2,9 +2,9 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { List } from "@prisma/client";
+import { Card } from "@prisma/client";
 import { InputType, ReturnType } from "./types";
-import { updateListSchema } from "./schema";
+import { deleteCardSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/db";
 
@@ -17,20 +17,18 @@ async function hanlder(data: InputType): Promise<ReturnType> {
     };
   }
 
-  const { title, id, boardId } = data;
+  const { id, boardId } = data;
 
-  let list: List;
+  let card: Card;
   try {
-    list = await db.list.update({
+    card = await db.card.delete({
       where: {
         id,
-        boardId,
-        board: {
-          orgId,
+        list: {
+          board: {
+            orgId,
+          },
         },
-      },
-      data: {
-        title,
       },
     });
   } catch (error: unknown) {
@@ -40,15 +38,15 @@ async function hanlder(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to update list",
+        error: "Failed to delete card",
       };
     }
   }
 
   revalidatePath(`/board/${boardId}`);
   return {
-    data: list,
+    data: card,
   };
 }
 
-export const updateList = createSafeAction(updateListSchema, hanlder);
+export const deleteCard = createSafeAction(deleteCardSchema, hanlder);
