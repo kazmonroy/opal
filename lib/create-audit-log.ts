@@ -1,13 +1,13 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { db } from "@/db";
 
-enum ACTION {
+export enum ACTION {
   CREATE = "CREATE",
   UPDATE = "UPDATE",
   DELETE = "DELETE",
 }
 
-enum ENTITY_TYPE {
+export enum ENTITY_TYPE {
   BOARD = "BOARD",
   LIST = "LIST",
   CARD = "CARD",

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { Card } from "@prisma/client";
 import { InputType, ReturnType } from "./types";
 import { createCardSchema } from "./schema";
+import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/db";
 
@@ -48,6 +49,13 @@ async function hanlder(data: InputType): Promise<ReturnType> {
     const newOrder = lastCard ? lastCard.order + 1 : 1;
 
     card = await db.card.create({ data: { title, listId, order: newOrder } });
+
+    await createAuditLog({
+      entityId: card.id,
+      entityType: ENTITY_TYPE.CARD,
+      entityTitle: card.title,
+      action: ACTION.CREATE,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {
