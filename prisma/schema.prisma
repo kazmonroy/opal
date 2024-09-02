@@ -54,3 +54,18 @@ model Card {
 
   @@index([listId])
 }
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  orgId     String
+  action    String 
+  entityId  String
+  entityType  String
+  entityTitle  String
+  userId    String
+  userImage String
+  userName  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

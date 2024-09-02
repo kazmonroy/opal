@@ -2,11 +2,12 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { InputType, ReturnType } from "./types";
-import { db } from "@/db";
 import { Board } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { createBoardSchema } from "./schema";
+import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
+import { db } from "@/db";
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
@@ -39,6 +40,13 @@ async function handler(data: InputType): Promise<ReturnType> {
         imageLinkHTML,
         imageUserName,
       },
+    });
+
+    await createAuditLog({
+      entityId: board.id,
+      entityType: ENTITY_TYPE.BOARD,
+      entityTitle: board.title,
+      action: ACTION.CREATE,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {

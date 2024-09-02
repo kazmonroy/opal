@@ -50,3 +50,5 @@ export {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+
+export { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
