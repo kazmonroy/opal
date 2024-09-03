@@ -1,6 +1,6 @@
-import { auth } from "@clerk/nextjs/server";
-import { db } from "../db";
-const DAY_IN_MS = 84_400_000;
+import { auth } from '@clerk/nextjs/server';
+import { db } from '../db';
+const DAY_IN_MS = 86_400_000;
 
 export async function checkSubscription() {
   const { orgId } = auth();
