@@ -5,7 +5,7 @@ import { InputType, ReturnType } from "./types";
 import { stripeRedirectSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/db";
-import { isAbsoluteUrl } from "@/lib/utils";
+import { getAbsoluteUrl } from "@/lib/utils";
 import { stripe } from "@/lib/stripe";
 import { revalidatePath } from "next/cache";
 
@@ -19,7 +19,7 @@ async function hanlder(data: InputType): Promise<ReturnType> {
     };
   }
 
-  const settingsUrl = isAbsoluteUrl(`organization/${orgId}`);
+  const settingsUrl = getAbsoluteUrl(`/organization/${orgId}`);
   let url = "";
 
   try {
