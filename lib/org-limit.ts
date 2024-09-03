@@ -96,7 +96,7 @@ export async function getAvailableCount() {
 
   if (!orgLimit) {
     return 0;
-  } else {
-    return orgLimit.count;
   }
+
+  return orgLimit.count;
 }
