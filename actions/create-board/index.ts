@@ -1,29 +1,32 @@
-"use server";
+'use server';
 
-import { auth } from "@clerk/nextjs/server";
-import { InputType, ReturnType } from "./types";
-import { Board } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-import { createSafeAction } from "@/lib/create-safe-action";
-import { createBoardSchema } from "./schema";
-import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
-import { db } from "@/db";
-import { incrementAvailableCount, hasAvailableCount } from "@/lib/org-limit";
+import { auth } from '@clerk/nextjs/server';
+import { InputType, ReturnType } from './types';
+import { Board } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+import { createSafeAction } from '@/lib/create-safe-action';
+import { createBoardSchema } from './schema';
+import { ACTION, createAuditLog, ENTITY_TYPE } from '@/lib/create-audit-log';
+import { db } from '@/db';
+import { incrementAvailableCount, hasAvailableCount } from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
-      error: "Not Authorized",
+      error: 'Not Authorized',
     };
   }
 
   const canCreateBoard = await hasAvailableCount();
-  if (!canCreateBoard) {
+  const isPro = await checkSubscription();
+
+  if (!canCreateBoard && !isPro) {
     return {
       error:
-        "You have reached your limit for free boards. Please upgrade to Pro to create more.",
+        'You have reached your limit for free boards. Please upgrade to Pro to create more.',
     };
   }
 
@@ -31,12 +34,12 @@ async function handler(data: InputType): Promise<ReturnType> {
 
   if (!image) {
     return {
-      error: "Missing fields. Failed to create board.",
+      error: 'Missing fields. Failed to create board.',
     };
   }
 
   const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
-    image.split("|");
+    image.split('|');
 
   let board: Board;
   try {
@@ -52,7 +55,9 @@ async function handler(data: InputType): Promise<ReturnType> {
       },
     });
 
-    await incrementAvailableCount();
+    if (!isPro) {
+      await incrementAvailableCount();
+    }
 
     await createAuditLog({
       entityId: board.id,
@@ -67,7 +72,7 @@ async function handler(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to create board",
+        error: 'Failed to create board',
       };
     }
   }
