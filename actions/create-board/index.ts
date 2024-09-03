@@ -8,6 +8,7 @@ import { createSafeAction } from "@/lib/create-safe-action";
 import { createBoardSchema } from "./schema";
 import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 import { db } from "@/db";
+import { incrementAvailableCount, hasAvailableCount } from "@/lib/org-limit";
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
@@ -17,6 +18,15 @@ async function handler(data: InputType): Promise<ReturnType> {
       error: "Not Authorized",
     };
   }
+
+  const canCreateBoard = await hasAvailableCount();
+  if (!canCreateBoard) {
+    return {
+      error:
+        "You have reached your limit for free boards. Please upgrade to Pro to create more.",
+    };
+  }
+
   const { title, image } = data;
 
   if (!image) {
@@ -41,6 +51,8 @@ async function handler(data: InputType): Promise<ReturnType> {
         imageUserName,
       },
     });
+
+    await incrementAvailableCount();
 
     await createAuditLog({
       entityId: board.id,
