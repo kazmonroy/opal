@@ -34,7 +34,7 @@ function ProModal() {
             fill
           />
         </div>
-        <div className="text-slate-700 mx-auto py-4 space-y-4 px-6">
+        <div className="text-slate-700 mx-auto py-4 space-y-6 px-6">
           <h2 className="font-semibold text-xl mb-6">
             Upgrade to Opal Pro today!
           </h2>
@@ -42,7 +42,7 @@ function ProModal() {
             Explore the best of Opal
           </p>
 
-          <div className="mt-2">
+          <div className="">
             <ul className="text-sm list-disc pl-3">
               <li>Unlimited boards</li>
               <li>Advanced task management</li>
