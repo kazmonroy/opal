@@ -9,6 +9,7 @@ import { deleteBoardSchema } from "./schema";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
 import { db } from "@/db";
+import { decrementAvailableCount } from "@/lib/org-limit";
 
 async function hanlder(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
@@ -29,6 +30,8 @@ async function hanlder(data: InputType): Promise<ReturnType> {
         orgId,
       },
     });
+
+    await decrementAvailableCount();
 
     await createAuditLog({
       entityId: board.id,
