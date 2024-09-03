@@ -1,12 +1,28 @@
 "use client";
 
+import Image from "next/image";
+import { toast } from "sonner";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { Button, Dialog, DialogContent } from "@/components/ui";
-import Image from "next/image";
+import { stripeRedirect } from "@/actions/stripe-redirect";
+import { useAction } from "@/hooks/use-action";
 
 function ProModal() {
   const isOpen = useProModal((state) => state.isOpen);
   const onClose = useProModal((state) => state.onClose);
+
+  const { execute, isLoading } = useAction(stripeRedirect, {
+    onSuccess: (data) => {
+      window.location.href = data;
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
+
+  const handleOnClick = () => {
+    execute({});
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md pt-14 pb-6 md:p-12 overflow-hidden md:flex gap-4">
@@ -35,7 +51,13 @@ function ProModal() {
             </ul>
           </div>
 
-          <Button className="w-full">Upgrade</Button>
+          <Button
+            className="w-full"
+            onClick={handleOnClick}
+            disabled={isLoading}
+          >
+            Upgrade
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
