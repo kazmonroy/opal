@@ -79,3 +79,14 @@ model OrgLimit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model OrgSubscription {
+  id                String @id @default(uuid())
+  orgId             String @unique
+  stripeCustomerId String? @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId String?
+  stripeCurrentPeriodEnd DateTime? 
+  
+
+}
