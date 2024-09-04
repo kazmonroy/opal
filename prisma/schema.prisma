@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -56,37 +56,34 @@ model Card {
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
-  orgId     String
-  action    String 
-  entityId  String
+  id          String @id @default(uuid())
+  orgId       String
+  action      String
+  entityId    String
   entityType  String
-  entityTitle  String
-  userId    String
-  userImage String
-  userName  String
+  entityTitle String
+  userId      String
+  userImage   String
+  userName    String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-
 model OrgLimit {
   id    String @id @default(uuid())
   orgId String @unique
-  count Int @default(0)
+  count Int    @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model OrgSubscription {
-  id                String @id @default(uuid())
-  orgId             String @unique
-  stripeCustomerId String? @unique
-  stripeSubscriptionId String? @unique
-  stripePriceId String?
-  stripeCurrentPeriodEnd DateTime? 
-  
-
+  id                     String    @id @default(uuid())
+  orgId                  String    @unique
+  stripeCustomerId       String?   @unique
+  stripeSubscriptionId   String?   @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
 }
