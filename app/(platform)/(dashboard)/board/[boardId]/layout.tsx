@@ -11,12 +11,6 @@ interface BoardIdLayoutProps {
   };
 }
 
-const getBoard = (boardId: string, orgId: string) => {
-  return db.board.findUnique({
-    where: { id: boardId, orgId },
-  });
-};
-
 export async function generateMetadata({ params }: BoardIdLayoutProps) {
   const { orgId } = auth();
 
@@ -25,6 +19,12 @@ export async function generateMetadata({ params }: BoardIdLayoutProps) {
       title: 'Board',
     };
   }
+
+  const getBoard = (boardId: string, orgId: string) => {
+    return db.board.findUnique({
+      where: { id: boardId, orgId },
+    });
+  };
 
   const board = await getBoard(params.boardId, orgId);
 
@@ -40,6 +40,13 @@ async function BoardIdLayout({ children, params }: BoardIdLayoutProps) {
   if (!orgId) {
     redirect('select-org');
   }
+
+  const getBoard = (boardId: string, orgId: string) => {
+    return db.board.findUnique({
+      where: { id: boardId, orgId },
+    });
+  };
+
   const board = await getBoard(boardId, orgId);
 
   if (!board) {
