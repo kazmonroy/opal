@@ -11,7 +11,7 @@ interface BoardIdLayoutProps {
   };
 }
 
-export const getBoard = (boardId: string, orgId: string) => {
+const getBoard = (boardId: string, orgId: string) => {
   return db.board.findUnique({
     where: { id: boardId, orgId },
   });
