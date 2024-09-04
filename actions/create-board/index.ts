@@ -1,32 +1,45 @@
-"use server";
+'use server';
 
-import { auth } from "@clerk/nextjs/server";
-import { InputType, ReturnType } from "./types";
-import { Board } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-import { createSafeAction } from "@/lib/create-safe-action";
-import { createBoardSchema } from "./schema";
-import { ACTION, createAuditLog, ENTITY_TYPE } from "@/lib/create-audit-log";
-import { db } from "@/db";
+import { auth } from '@clerk/nextjs/server';
+import { InputType, ReturnType } from './types';
+import { Board } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+import { createSafeAction } from '@/lib/create-safe-action';
+import { createBoardSchema } from './schema';
+import { ACTION, createAuditLog, ENTITY_TYPE } from '@/lib/create-audit-log';
+import { db } from '@/db';
+import { incrementAvailableCount, hasAvailableCount } from '@/lib/org-limit';
+import { checkSubscription } from '@/lib/subscription';
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
-      error: "Not Authorized",
+      error: 'Not Authorized',
     };
   }
+
+  const canCreateBoard = await hasAvailableCount();
+  const isPro = await checkSubscription();
+
+  if (!canCreateBoard && !isPro) {
+    return {
+      error:
+        'You have reached your limit for free boards. Please upgrade to Pro to create more.',
+    };
+  }
+
   const { title, image } = data;
 
   if (!image) {
     return {
-      error: "Missing fields. Failed to create board.",
+      error: 'Missing fields. Failed to create board.',
     };
   }
 
   const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
-    image.split("|");
+    image.split('|');
 
   let board: Board;
   try {
@@ -42,6 +55,10 @@ async function handler(data: InputType): Promise<ReturnType> {
       },
     });
 
+    if (!isPro) {
+      await incrementAvailableCount();
+    }
+
     await createAuditLog({
       entityId: board.id,
       entityType: ENTITY_TYPE.BOARD,
@@ -55,7 +72,7 @@ async function handler(data: InputType): Promise<ReturnType> {
       };
     } else {
       return {
-        error: "Failed to create board",
+        error: 'Failed to create board',
       };
     }
   }
